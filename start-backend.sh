@@ -15,6 +15,7 @@ curl -o tsconfig.json https://raw.githubusercontent.com/Template-in-a-glass/temp
 
 npm pkg set scripts.test="vitest run"
 npm pkg set scripts.watch="vitest watch"
+npm pkg set scripts.coverage="vitest run --coverage"
 
 # Init Git
 curl -o .gitignore https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.gitignore
@@ -29,7 +30,6 @@ curl -o .vscode/settings.json https://raw.githubusercontent.com/Template-in-a-gl
 
 npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-airbnb-base eslint-import-resolver-typescript eslint-plugin-etc eslint-plugin-import eslint-plugin-unicorn
 
-curl -o .eslintignore https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.eslintignore
 curl -o .eslintrc.json https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.eslintrc.json
 npm pkg set scripts.lint="eslint ./src --ext .js,.jsx,.ts,.tsx"
 npm pkg set scripts.format="eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
@@ -43,17 +43,21 @@ mkdir src
 mkdir ./src/api
 mkdir ./src/core
 mkdir ./src/infra
-npm init -w ./src/api
-npm init -w ./src/core
-npm init -w ./src/infra
+npm init private -w ./src/api
+npm init private -w ./src/core
+npm init private -w ./src/infra
+
+git add .
+git commit -m "Create workspace"
+
+## Update all workspaces and install libraries
+npm install -w core date-fns
+npm install -ws
 
 # Update all libraries (can be dangerous)
-npm pkg set scripts.update-dependencies="npx -y npm-check-updates@latest -u"
+npm pkg set scripts.update-dependencies="npx -y npm-check-updates@latest -u && npx -ws -y npm-check-updates@latest -u"
 npm run update-dependencies
 npm install
 
 git add .
 git commit -m "Update all libraries"
-
-## Update all workspaces
-npm install -ws
