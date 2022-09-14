@@ -1,0 +1,59 @@
+set -o allexport
+source .env
+set +o allexport
+
+mkdir $APP_NAME-backend
+cd $APP_NAME-backend
+
+# Init project
+npm init private
+
+npm pkg set name="$APP_NAME-backend"
+
+npm install --save-dev typescript vitest
+curl -o tsconfig.json https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/tsconfig.json
+
+npm pkg set scripts.test="vitest run"
+npm pkg set scripts.watch="vitest watch"
+
+# Init Git
+curl -o .gitignore https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.gitignore
+git init
+git add .
+git commit -m "Init project"
+
+# Install estlint and vscode plugin and settings
+mkdir .vscode
+curl -o .vscode/extensions.json https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.vscode/extensions.json
+curl -o .vscode/settings.json https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.vscode/settings.json
+
+npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-airbnb-base eslint-import-resolver-typescript eslint-plugin-etc eslint-plugin-import eslint-plugin-unicorn
+
+curl -o .eslintignore https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.eslintignore
+curl -o .eslintrc.json https://raw.githubusercontent.com/Template-in-a-glass/template-backend/main/.eslintrc.json
+npm pkg set scripts.lint="eslint ./src --ext .js,.jsx,.ts,.tsx"
+npm pkg set scripts.format="eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
+
+git add .
+git commit -m "Install estlint and vscode plugin and settings"
+
+# Create workspace
+
+mkdir src
+mkdir ./src/api
+mkdir ./src/core
+mkdir ./src/infra
+npm init -w ./src/api
+npm init -w ./src/core
+npm init -w ./src/infra
+
+# Update all libraries (can be dangerous)
+npm pkg set scripts.update-dependencies="npx -y npm-check-updates@latest -u"
+npm run update-dependencies
+npm install
+
+git add .
+git commit -m "Update all libraries"
+
+## Update all workspaces
+npm install -ws
