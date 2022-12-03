@@ -1,0 +1,15 @@
+{
+  "packageManager": "npm",
+  "reporters": [
+    "clear-text",
+    "progress",
+    "html",
+    "json"
+  ],
+  "htmlReporter": {
+    "fileName": "./test-report/mutation/index.html"
+  },
+  "jsonReporter": {
+    "fileName": "./test-report/mutation/mutation.json"
+  }
+}

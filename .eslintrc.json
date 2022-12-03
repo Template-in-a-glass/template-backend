@@ -28,8 +28,7 @@
       "error",
       "ignorePackages",
       {
-        "ts": "never",
-        "tsx": "never"
+        "ts": "never"
       }
     ],
     "no-shadow": "off",
@@ -58,24 +57,15 @@
       "error",
       {
         "devDependencies": [
-          "**/*.test.ts",
-          "**/*.test.tsx",
-          "**/*.config.**",
-          "**/mock/**"
+          "**/*.test.ts"
         ]
       }
     ],
     "no-multiple-empty-lines": "error",
-    "sort-keys": [
-      "error",
-      "asc",
-      {
-        "caseSensitive": true,
-        "natural": false,
-        "minKeys": 3
-      }
-    ],
-    "etc/prefer-interface": "error"
+    "etc/prefer-interface": "error",
+    "unicorn/no-null": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/no-array-reduce": "off"
   },
   "settings": {
     "import/resolver": {

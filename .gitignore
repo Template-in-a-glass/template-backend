@@ -21,3 +21,10 @@ pnpm-debug.log*
 
 # snyk
 .dccache
+
+# Vitest
+test-report/
+coverage/
+
+# stryker temp files
+.stryker-tmp
