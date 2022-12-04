@@ -11,5 +11,11 @@
   },
   "jsonReporter": {
     "fileName": "./test-report/mutation/mutation.json"
-  }
+  },
+  "mutate": [
+    "src/app/core/use_case/**/*.ts?(x)",
+    "src/app/domain/**/*.ts?(x)",
+    "!src/app/**/__tests__/**/*.ts?(x)",
+    "!src/app/**/?(*.)+(spec|test).ts?(x)"
+  ]
 }

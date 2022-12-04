@@ -22,5 +22,8 @@
     "strings": true
   },
   "editor.detectIndentation": false,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "conventionalCommits.autoCommit": true,
+  "git.enableSmartCommit": true,
+  "git.postCommitCommand": "sync"
 }

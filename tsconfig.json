@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "es2020",
     "strict": true,
     "preserveConstEnums": true,
     "noEmit": true,
     "sourceMap": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -16,6 +17,20 @@
     "experimentalDecorators": true,
     "types": [
       "vitest/globals"
-    ]
+    ],
+    "paths": {
+      "app-core/*": [
+        "app/core/*"
+      ],
+      "app-domain/*": [
+        "app/domain/*"
+      ],
+      "app-infra/*": [
+        "app/infra/*"
+      ],
+      "common/*": [
+        "common/*"
+      ]
+    }
   }
 }

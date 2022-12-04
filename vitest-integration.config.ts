@@ -14,9 +14,6 @@ export default defineConfig({
       reporter: ['clover', 'text'],
       reportsDirectory: './test-report/coverage'
     },
-    include: ['src/app/**/**.test.ts'],
-    exclude: [
-      '**/integration.test.ts'
-    ]
+    include: ['src/**/integration.test.ts']
   }
 });
