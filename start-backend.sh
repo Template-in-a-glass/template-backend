@@ -26,20 +26,6 @@ curl -o commitlint.config.ts https://raw.githubusercontent.com/Template-in-a-gla
 git add .
 git commit -m "chore: Init Conventional Commit"
 
-# Init Husky
-npm install --save-dev husky
-npm pkg set scripts.prepare="husky install"
-npm run prepare
-npx husky add .husky/commit-msg "npx --no -- commitlint --edit ${1}"
-npx husky add .husky/pre-commit "npm run lint"
-npx husky add .husky/pre-commit "branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-if [ "$branch" == "main" ]
-then
-    npm run test;
-fi"
-git add .
-git commit -m "chore: Init Husky"
-
 # Init Dotenv
 npm install --save-dev dotenv-cli
 git add .
@@ -70,11 +56,27 @@ npm pkg set scripts.test:watch="vitest watch"
 npm pkg set scripts.test:mutation="npx -y stryker@latest run"
 npm pkg set scripts.test:coverage="vitest run --coverage"
 npm pkg set scripts.test:report="vitest run --reporter=json --reporter=junit --outputFile.json=./test-report/report.json --outputFile.junit=./test-report/report.xml"
-npm pkg set scripts.ttest:integration: "dotenv -e .env.test -- vitest run --config=./vitest-integration.config.ts",
+npm pkg set scripts.test:integration: "dotenv -e .env.test -- vitest run --config=./vitest-integration.config.ts",
 npm pkg set scripts.lint="eslint ./src --ext .js,.jsx,.ts,.tsx"
 npm pkg set scripts.format="eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
 git add .
 git commit -m "chore: Add script in package.json"
+
+# Init Husky
+npm install --save-dev husky
+npm pkg set scripts.prepare="husky install"
+npm run prepare
+npx husky add .husky/commit-msg "npx --no -- commitlint --edit ${1}"
+npx husky add .husky/pre-commit "npm run lint"
+npx husky add .husky/pre-commit "
+branch=\$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')\
+
+if [ "\$branch" == "main" ]
+then
+    npm run test;
+fi"
+git add .
+git commit -m "chore: Init Husky"
 
 # Create workspace
 mkdir ./src
@@ -87,12 +89,6 @@ npm init private -w ./src/app/core
 npm init private -w ./src/app/domain
 npm init private -w ./src/app/infra
 npm init private -w ./src/common
-npm pkg set workspaces='[
-    "src/app/core",
-    "src/app/domain",
-    "src/app/infra",
-    "src/common"
-  ]'
 git add .
 git commit -m "chore: Create workspace"
 
@@ -105,7 +101,7 @@ npm pkg -w src/app/core set dependencies.common="file:../../common"
 npm pkg -w src/app/core set dependencies.app-domain="file:../domain"
 ## Infra
 npm pkg -w src/app/infra set dependencies.common="file:../../common"
-npm pkg -w src/app/infra set dependencies.app-core= "file:../core"
+npm pkg -w src/app/infra set dependencies.app-core="file:../core"
 
 npm install
 git add .
@@ -121,7 +117,7 @@ git commit -m "chore: Update all libraries"
 
 # Download code template and install library
 curl https://codeload.github.com/Template-in-a-glass/template-backend/tar.gz/main | tar -xz --strip=1 template-landing-page-next-app-main/src/
-npm install 
+npm install
 
 git add .
 git commit -m "feat: Download code template and install library"
